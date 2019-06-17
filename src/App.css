@@ -1,0 +1,98 @@
+.menu-item-wrapper {
+  padding: 0;
+  margin: 5px 10px;
+  user-select: none;
+  cursor: pointer;
+  border: none;
+}
+
+.menu-wrapper{
+  margin:0;
+} 
+
+.horizontal-menu{
+  margin-left:1em;
+  margin-right:1em;
+}
+
+.menu-item-wrapper:first-child{
+  padding-left:0; 
+  margin-left:0;
+}
+.menu-item-wrapper:last-child{
+  padding-right:0;
+  margin-right: 0;
+}
+
+.card-overlay-div{
+  padding-bottom: 20px;
+  width: 180px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+
+}
+
+.card-overlay-div-carousal{
+  padding-bottom: 20px;
+  width: 500px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+
+}
+
+.storyline-div{
+  max-width:600px;
+  padding: 10%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.6;
+
+}
+
+.brand-name-link{
+  color: #fff;
+  text-decoration: none;
+}
+
+.MuiGridListTile-tile{
+  width:300px;
+  height:300px;
+}
+
+.MuiGridListTile-root{
+  width:300px;
+  height:300px;
+}
+
+.MuiGridList-root{
+  width:650px;
+  height:650px;
+}
+
+.reactive-list{
+
+  width:100%;
+  
+}
+
+.search-list{
+  margin:10px;
+}
+
+.css-12nu9md.e1hwwpu60{
+   display: none;
+}
+
+.search-stat{
+  display: flex;
+  float: left;
+}
+
+
+
+.css-145p3ou.e1hwwpu60{
+  display: flex;
+  justify-content: space-between
+}
