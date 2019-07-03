@@ -1,6 +1,6 @@
 .menu-item-wrapper {
   padding: 0;
-  margin: 5px 10px;
+  margin: 5px 5px;
   user-select: none;
   cursor: pointer;
   border: none;
@@ -11,8 +11,7 @@
 } 
 
 .horizontal-menu{
-  margin-left:1em;
-  margin-right:1em;
+  margin-right:3em;
 }
 
 .menu-item-wrapper:first-child{
@@ -26,7 +25,7 @@
 
 .card-overlay-div{
   padding-bottom: 20px;
-  width: 180px;
+  width:250px;
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: normal;
@@ -43,8 +42,8 @@
 }
 
 .storyline-div{
-  max-width:600px;
-  padding: 10%;
+  max-width:800px;
+  padding: 5%;
   word-wrap: break-word;
   overflow-wrap: break-word;
   line-height: 1.6;
@@ -96,3 +95,12 @@
   display: flex;
   justify-content: space-between
 }
+
+.MuiGrid-container{
+  margin-top:34px;
+}
+
+.arrow-card{
+  border-radius: 50%;
+}
+

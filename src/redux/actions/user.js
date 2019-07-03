@@ -11,12 +11,12 @@ export const getuser = (firstname, lastname, id, uid ,email) => ({
 
 export const getUserFromDB = () => {
     return async (dispatch, getState) =>{
-        console.log("getuserfromdb func called");
         const id = getState().auth.uid;
+        const providerId = getState().auth.providerId;
+        
         try {
-            const res = await axios.get(`http://localhost:3000/api/user/${id}`);
+            const res = await axios.get(`http://139.59.71.68/api/user/${id}`);
             const user = res.data.data[0];
-            console.log(user.name.first)
             dispatch(getuser(user.name.first, user.name.last, user._id, user.uid, user.email));
         }
         catch (err) {

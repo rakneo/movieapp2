@@ -6,10 +6,8 @@ function HomePage(){
         return (
             <div>
                 <MovieCarousal/>
-                <MoviesHorizontalList/>
-                <MoviesHorizontalList/>
-                <MoviesHorizontalList/>
-                <MoviesHorizontalList/>
+                <MoviesHorizontalList list_type="popular" title="Popular"/>
+                <MoviesHorizontalList list_type="top_rated" title="Top Rated"/>
             </div>
             
         )

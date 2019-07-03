@@ -10,7 +10,11 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
-import { startLogin } from '../redux/actions/auth';
+import { startLogin, startLoginGoogle } from '../redux/actions/auth';
+import { Divider } from '@material-ui/core';
+import GoogleIcon from '../Images/GoogleIcon';
+
+
 
 const styles = theme => ({
     '@global': {
@@ -35,6 +39,13 @@ const styles = theme => ({
       submit: {
         margin: theme.spacing(3, 0, 2),
       },
+      vert:{
+        width:0,
+        height:24,
+        backgroundColor:'black',
+        marginLeft:theme.spacing(1),
+        marginRight:theme.spacing(1)
+      }
 })
 
 
@@ -114,6 +125,7 @@ class LoginPage extends Component{
               />
               <Button
                 type="submit"
+                size="large"
                 fullWidth
                 variant="contained"
                 color="primary"
@@ -128,12 +140,20 @@ class LoginPage extends Component{
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/register" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
               </Grid>
             </form>
+          </div>
+          <Divider style={{marginTop:15, marginBottom:15}}/>
+          <div>
+              <Button size="large" variant="contained" fullWidth style={{backgroundColor:'white'}} onClick={this.props.startLoginGoogle}>
+                  <GoogleIcon/>
+                  <Divider className={classes.vert}/>
+                  sign in with google
+              </Button>
           </div>
         </Container>
        )
@@ -141,7 +161,8 @@ class LoginPage extends Component{
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  startLogin: (email, password)  => dispatch(startLogin(email, password))
+  startLogin: (email, password)  => dispatch(startLogin(email, password)),
+  startLoginGoogle: () => dispatch(startLoginGoogle())
 })
 
 const mapStateToProps = (state) => ({

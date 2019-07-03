@@ -8,20 +8,17 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import Paper from '@material-ui/core/Paper';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { CssBaseline } from '@material-ui/core';
-import {Link} from 'react-router-dom';
-import {Redirect} from 'react-router-dom';
+import { CssBaseline, Button } from '@material-ui/core';
+import {Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {startLogout} from '../redux/actions/auth';
+
+
 
 
 
@@ -89,6 +86,9 @@ const styles = theme => ({
       display: 'none',
     },
   },
+  signin_bt:{
+    backgroundColor:'white'
+  }
 });
 
 class NavBar extends React.Component {
@@ -97,13 +97,13 @@ class NavBar extends React.Component {
     super(props);
     this.state = {
       searchQuery:'',
-      searchRequest:false,
       anchorEl: null,
       mobileMoreAnchorEl: null,
     }
     this.searchInputChangeHandler.bind(this);
     this.searchInputOnKeyPressHandler.bind(this);
   }
+ 
 
   handleProfileMenuOpen = event => {
     this.setState({ anchorEl: event.currentTarget });
@@ -130,8 +130,16 @@ class NavBar extends React.Component {
   }
 
   searchInputOnKeyPressHandler=(e)=>{
-    if(this.state.searchRequest === false && this.state.searchQuery !== ''){
-      this.setState({searchRequest:true})
+    if(e.key === 'Enter' &&  this.state.searchQuery !== ''){
+      this.props.history.push(`/search?q=${this.state.searchQuery}`)
+      this.setState({searchRequest:true, searchQuery:''})
+    }
+  }
+
+  searchInputClickHandler=(e)=>{
+    if(this.state.searchQuery !== ''){
+      this.props.history.push(`/search?q=${this.state.searchQuery}`)
+      this.setState({searchRequest:true, searchQuery:''})
     }
   }
 
@@ -145,13 +153,6 @@ class NavBar extends React.Component {
     const { classes } = this.props;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-    const {searchQuery}=this.state
-    
-    if(this.state.searchRequest === true){
-      return <Redirect to={"/"+searchQuery+"/s"}/>
-    }
-
- 
 
     const renderMenu = (
       <Menu
@@ -200,19 +201,20 @@ class NavBar extends React.Component {
           <Link to='/' className="brand-name-link">
           
             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-             Movie App
+             The Clap Board
             </Typography>
             </Link>
             <div className={classes.search}>
-            <Paper>
+            <Paper elevation={5}>
             <InputBase
-              className={classes.inputInput}
+              className={classes.search}
               placeholder="Search..."
               onChange={this.searchInputChangeHandler}
               value={this.state.searchQuery}
+              onKeyPress={this.searchInputOnKeyPressHandler}
             
             />
-            <IconButton className={classes.iconButton} aria-label="Search" onClick={this.searchInputOnKeyPressHandler}>
+            <IconButton className={classes.iconButton} aria-label="Search" onClick={this.searchInputOnClickHandler}>
               <SearchIcon />
             </IconButton>
           </Paper>
@@ -239,18 +241,13 @@ class NavBar extends React.Component {
             :
             <div>
               <div className={classes.sectionDesktop}>
-                  <Link to='/login' className="brand-name-link">
-                    <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-                    sign in
-                  </Typography>
-                  </Link>
+                  <Button elevation={5} variant="contained" size="large" className={classes.signin_bt} onClick={()=>{this.props.history.push('/login')}}>sign in</Button>
               </div>
             </div>}
           </Toolbar>
         </AppBar>
         {renderMenu}
         {renderUserMobileMenu}
-
       </div>
     );
   }
@@ -268,4 +265,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: !!state.auth.uid
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(NavBar));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(NavBar)));

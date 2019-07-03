@@ -6,8 +6,8 @@ import Pagination from '../utils/Pagination';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import MovieCarouselCard from './MovieCarouselCard';
-import dummy from '../Images/dummy.jpg';
 import MovieTrendingGrid from './MovieTrendingGrid';
+import {MovieCarousalLoader} from './SkeletonLoaders';
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 
@@ -19,7 +19,9 @@ class MovieCarousal extends React.Component {
 
 
   async componentWillMount(){
-    await axios.get("http://localhost:3000/api/movie/now_playing")
+    await axios.get("http://139.59.71.68/api/movie/now_playing",{headers: {
+      'Access-Control-Allow-Origin': '*',
+    }})
                .then( res =>{
                 this.setState({slideData:res.data.data.slice(0,5)});
                })
@@ -51,12 +53,7 @@ class MovieCarousal extends React.Component {
                 
                   <AutoPlaySwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>
                     {(slideData === null)?
-                      <MovieCarouselCard
-                      key={"dummy"} 
-                      image={dummy} 
-                      description={"Loading"} 
-                      movieID={""} 
-                      title={"Loading"}/>
+                      <MovieCarousalLoader/> 
                       :slideData.map(slide => (
                       <MovieCarouselCard
                         key={slide.id} 

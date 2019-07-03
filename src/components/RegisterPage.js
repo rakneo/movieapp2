@@ -10,6 +10,8 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import { Divider } from '@material-ui/core';
+import GoogleIcon from '../Images/GoogleIcon';
 import Container from '@material-ui/core/Container';
 import {connect} from 'react-redux';
 import firebase from '../firebase/firebase';
@@ -39,6 +41,13 @@ const styles = theme => ({
       submit: {
         margin: theme.spacing(3, 0, 2),
       },
+      vert:{
+        width:0,
+        height:24,
+        backgroundColor:'black',
+        marginLeft:theme.spacing(1),
+        marginRight:theme.spacing(1)
+      }
 })
 
 
@@ -60,7 +69,7 @@ class RegisterPage extends Component{
       .then(res =>{
         console.log(res.user.uid)
         const user ={uid:res.user.uid, email: this.state.email, name: { first: this.state.firstName, last: this.state.lastName }}
-        axios.post('http://localhost:3000/api/user/create', user)
+        axios.post('http://139.59.71.68/api/user/create', user)
         .then(res =>{
           console.log(res)
         }).catch(err => {
@@ -147,6 +156,7 @@ class RegisterPage extends Component{
                 </Grid>
                 <Button
                   type="submit"
+                  size="large"
                   fullWidth
                   variant="contained"
                   color="primary"
@@ -156,13 +166,21 @@ class RegisterPage extends Component{
                 </Button>
                 <Grid container justify="flex-end">
                   <Grid item>
-                    <Link href="#" variant="body2">
+                    <Link href="/login" variant="body2">
                       Already have an account? Sign in
                     </Link>
                   </Grid>
                 </Grid>
               </form>
             </div>
+            <Divider style={{marginTop:15, marginBottom:15}}/>
+          <div>
+              <Button size="large" variant="contained" fullWidth style={{backgroundColor:'white'}} onClick={this.props.startLoginGoogle}>
+                  <GoogleIcon className={classes.icon}/>
+                  <Divider className={classes.vert}/>
+                  sign in with google
+              </Button>
+          </div>
           </Container>
         );
     }

@@ -13,7 +13,8 @@ const styles = theme => ({
         width:300,
         height:300,
         position: 'relative',
-        marginBottom:5
+        marginBottom:5,
+        borderRadius:10
       },
       media: { 
         height:0,
@@ -22,7 +23,7 @@ const styles = theme => ({
       overlay: {
         width:300,  
         position: 'absolute',
-        top: '70%',
+        top: '65%',
         left: '0',
         color: 'white',
         backgroundColor: 'rgba(0,0,0,0.5)'

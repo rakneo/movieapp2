@@ -1,8 +1,10 @@
 import firebase from '../../firebase/firebase';
 
-export const login = (uid) => ({
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+
+export const login = (userData) => ({
   type: 'LOGIN',
-  uid
+  ...userData
 });
 
 export const startLogin = (email, password) => {
@@ -10,6 +12,12 @@ export const startLogin = (email, password) => {
     return firebase.auth().signInWithEmailAndPassword(email, password);
   };
 };
+
+export const startLoginGoogle = () =>{
+  return () => {
+    return firebase.auth().signInWithPopup(googleAuthProvider);
+  }
+}
 
 export const logout = () => ({
   type: 'LOGOUT'

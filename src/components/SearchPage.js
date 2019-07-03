@@ -2,16 +2,10 @@ import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail'
+import queryString from 'query-string';
 import MovieSearchCard from './MovieSearchCard';
-import axios from 'axios';
 import {
     ReactiveBase,
     DataSearch,
@@ -22,7 +16,6 @@ import {
     SingleRange,
     SelectedFilters,
     ReactiveList,
-    ResultCard
   } from "@appbaseio/reactivesearch";
 
   const drawerWidth = 300;
@@ -55,13 +48,17 @@ class SearchPage extends Component{
     constructor(props){
         super(props);
         this.state = {
-            searchQuery:this.props.match.params.searchQuery,
+            searchQuery:'',
             responseRecieved:false,
             isLoaded:false,
-            items:[],
             isClicked: false,
             message: "🔬Show Filters"
         }
+    }
+
+    componentWillMount(){
+      const values = queryString.parse(this.props.location.search);
+      this.setState({searchQuery:values.q})
     }
 
     advancedSearchBarHandler = (e) => {
@@ -79,7 +76,6 @@ class SearchPage extends Component{
 
     render(){
 
-        const {items} = this.state;
         const {classes} = this.props;
         return(
         <div>  
@@ -247,16 +243,17 @@ class SearchPage extends Component{
         </Drawer>
         <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Grid   
+        
+        <Grid
+        container
         direction="column"
         justify="center"
         alignItems="flex-start">
-        <Grid item>
+        <Grid item >
         <DataSearch 
         style={{margin:'2%'}} 
         debounce={1000}
         showClear
-        defaultValue={this.state.searchQuery}
         value={this.state.searchQuery}
         onChange={this.advancedSearchBarHandler}          
         componentId="mainSearch"            
@@ -293,9 +290,9 @@ class SearchPage extends Component{
                 list:'MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center search-list'
             }}
             renderItem={(res) => {
-                return (<Grid item>
+                return (<Grid item key={res.id}>
                         <MovieSearchCard 
-                            key={res.id}
+                            
                             id={res.id}
                             title={res.original_title}
                             year={res.release_date}

@@ -24,7 +24,19 @@ class App extends Component{
 
 firebase.auth().onAuthStateChanged((user)=>{
    if(user){
-      store.dispatch(login(user.uid));
+
+      const userData = {
+         uid:user.uid,
+         token:user.getIdToken,
+         isAnonymous:user.isAnonymous,
+         displayName: user.displayName,
+         email: user.email,
+         photoURL: user.photoURL,
+         providerId:user.providerId,
+         providerData:user.providerData
+      }
+
+      store.dispatch(login(userData));
       store.dispatch(getUserFromDB());
    }else{
       store.dispatch(logout());
